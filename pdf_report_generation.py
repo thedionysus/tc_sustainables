@@ -63,8 +63,8 @@ def generate_pdf_report(var_pdf_name='test_report.pdf', var_header_text='Sample 
 
             # Define the styles for header and footer
             self.styles = getSampleStyleSheet()
-            self.header_style = self.styles['Heading2']
-            self.footer_style = self.styles['Normal']
+            self.header_style = self.styles['Heading3']
+            self.footer_style = self.styles['Heading5']
 
             # Define the header and footer frames
             self.header_frame = Frame(
@@ -88,7 +88,7 @@ def generate_pdf_report(var_pdf_name='test_report.pdf', var_header_text='Sample 
 
         def _header_footer(self, canvas, doc):
             # Draw the header
-            self.header_style.alignment = 1  # center align the header text
+            self.header_style.alignment = 0  # center align the header text
             header_text = Paragraph(var_header_text, self.header_style)
             header_text.wrapOn(canvas, self.header_frame.width, self.header_frame.height)
             header_text.drawOn(canvas, self.header_frame.x1, self.header_frame.y1)
@@ -96,17 +96,37 @@ def generate_pdf_report(var_pdf_name='test_report.pdf', var_header_text='Sample 
         def _footer(self, canvas, doc):
             # Draw the footer
 
-            self.footer_style.alignment = 1  # center align the footer text
+            self.footer_style.alignment = 0  # center align the footer text
             footer_text = Paragraph(var_footer_text, self.footer_style)
             footer_text.wrapOn(canvas, self.footer_frame.width, self.footer_frame.height)
             footer_text.drawOn(canvas, self.footer_frame.x1, self.footer_frame.y1)
-
 
     # Create a new PDF document using the template
     pdf_doc = MyDocTemplate(var_pdf_name)
 
     # Add the content to the PDF document
-    elements = [Paragraph('This is some content for the PDF document.'), PageBreak(), Paragraph('This is some content for the PDF document Page 2.')]
+    elements = [
+                Paragraph('This is some content for the PDF document.'), 
+                PageBreak(), 
+                Paragraph('This is some content for the PDF document Page 2.'),
+                PageBreak(),
+                Paragraph(''),
+                Paragraph('This is some content for the PDF document Page 3.'),
+                PageBreak(),
+                Paragraph('This is some content for the PDF document Page 4.'),
+                PageBreak(),
+                Paragraph('This is some content for the PDF document Page 5.'),
+                PageBreak(),
+                Paragraph('This is some content for the PDF document Page 6.'),
+                PageBreak(),
+                Paragraph('This is some content for the PDF document Page 7.'),
+                PageBreak(),
+                Paragraph('This is some content for the PDF document Page 8.'),
+                PageBreak(),
+                Paragraph('This is some content for the PDF document Page 9.'),
+                PageBreak(),
+                Paragraph('This is some content for the PDF document Page 10.'),
+                PageBreak(),]
 
     pdf_doc.build(elements)
 
