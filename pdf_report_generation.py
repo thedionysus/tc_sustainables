@@ -7,6 +7,17 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, BaseDocTemplate, Pa
 import markdown
 from reportlab.pdfgen.canvas import Canvas
 
+import os
+import PyPDF2
+import openai
+import faiss
+from fpdf import FPDF
+import tiktoken
+from dotenv import load_dotenv
+import json
+from langchain_openai.embeddings.base import OpenAIEmbeddings
+import numpy as np
+
 # %% PDF Test with doc
 
 # def generate_pdf(data):
@@ -45,6 +56,38 @@ def greet(name):
 
 html = markdown.markdown(markdown_text)
 print(html)
+
+
+# %% RAG retrieval
+
+def extract_text_from_pdfs(pdf_folder):
+    documents = []
+    for filename in os.listdir(pdf_folder):
+        if filename.endswith('.pdf'):
+            # Assume filename format: CompanyName_Year.pdf
+            pdf_name = os.path.splitext(filename)[0]  # Remove .pdf extension
+            parts = pdf_name.split('_')
+            if len(parts) >= 2:
+                company = '_'.join(parts[:-1])
+                year = parts[-1]
+            else:
+                company = pdf_name
+                year = 'Unknown'
+            pdf_path = os.path.join(pdf_folder, filename)
+            with open(pdf_path, 'rb') as f:
+                reader = PyPDF2.PdfReader(f)
+                text = ''
+                for page in reader.pages:
+                    text += page.extract_text()
+            # Store text with metadata
+            doc = {
+                'company': company,
+                'year': year,
+                'text': text
+            }
+            documents.append(doc)
+    return documents
+
 
 # %% Defining necessary functions
 
