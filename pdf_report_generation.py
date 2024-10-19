@@ -7,16 +7,6 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, BaseDocTemplate, Pa
 import markdown
 from reportlab.pdfgen.canvas import Canvas
 
-import os
-import PyPDF2
-import openai
-import faiss
-from fpdf import FPDF
-import tiktoken
-from dotenv import load_dotenv
-import json
-from langchain_openai.embeddings.base import OpenAIEmbeddings
-import numpy as np
 
 # %% PDF Test with doc
 
@@ -91,7 +81,17 @@ def extract_text_from_pdfs(pdf_folder):
 
 # %% Defining necessary functions
 
-def generate_pdf_report(var_pdf_name='test_report.pdf', var_header_text='Sample Header', var_footer_text='Sample Footer'):
+def generate_pdf_report(text_page1,
+                        text_page2,
+                        text_page3,
+                        text_page4,
+                        text_page5,
+                        text_page6,
+                        text_page7,
+                        text_page8,
+                        text_page9,
+                        text_page10,
+                        var_pdf_name='test_report.pdf', var_header_text='Sample Header', var_footer_text='Sample Footer',):
     class MyDocTemplate(BaseDocTemplate):
         """Template class for PDF document"""
 
@@ -149,32 +149,32 @@ def generate_pdf_report(var_pdf_name='test_report.pdf', var_header_text='Sample 
 
     # Add the content to the PDF document
     elements = [
-                Paragraph('This is some content for the PDF document.'), 
+                Paragraph(text_page1), 
                 PageBreak(), 
-                Paragraph('This is some content for the PDF document Page 2.'),
+                Paragraph(text_page2),
                 PageBreak(),
                 Paragraph(''),
-                Paragraph('This is some content for the PDF document Page 3.'),
+                Paragraph(text_page3),
                 PageBreak(),
-                Paragraph('This is some content for the PDF document Page 4.'),
+                Paragraph(text_page4),
                 PageBreak(),
-                Paragraph('This is some content for the PDF document Page 5.'),
+                Paragraph(text_page5),
                 PageBreak(),
-                Paragraph('This is some content for the PDF document Page 6.'),
+                Paragraph(text_page6),
                 PageBreak(),
-                Paragraph('This is some content for the PDF document Page 7.'),
+                Paragraph(text_page7),
                 PageBreak(),
-                Paragraph('This is some content for the PDF document Page 8.'),
+                Paragraph(text_page8),
                 PageBreak(),
-                Paragraph('This is some content for the PDF document Page 9.'),
+                Paragraph(text_page9),
                 PageBreak(),
-                Paragraph('This is some content for the PDF document Page 10.'),
-                PageBreak(),]
+                Paragraph(text_page10),
+                PageBreak()]
 
     pdf_doc.build(elements)
 
 
 # %%  ReportLab - Generate report
-generate_pdf_report()
+generate_pdf_report('A', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B')
 
 # %%
